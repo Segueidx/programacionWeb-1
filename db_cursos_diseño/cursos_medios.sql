@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 02-02-2015 a las 07:19:31
+-- Tiempo de generación: 05-02-2015 a las 13:56:49
 -- Versión del servidor: 5.6.17
 -- Versión de PHP: 5.5.12
 
@@ -32,24 +32,19 @@ CREATE TABLE IF NOT EXISTS `estudiantes` (
   `apellidos` varchar(45) NOT NULL,
   `correo` varchar(45) NOT NULL,
   PRIMARY KEY (`id_estudiante`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=20 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 --
 -- Volcado de datos para la tabla `estudiantes`
 --
 
 INSERT INTO `estudiantes` (`id_estudiante`, `nombre`, `apellidos`, `correo`) VALUES
-(1, 'Camilo Arcel', 'Cantral Ads', 'ads@gmail.com'),
-(2, 'Grilo', 'Jai Gamel', 'gamel@gmail.com'),
-(3, 'Felipe ', 'García López', 'pipegarcial@hotmail.com'),
-(4, 'Pepita', 'Perez Cachonda', 'pepis@gmail.com'),
-(5, 'Oscar', 'Vergara García', 'oscar@gmail.com'),
-(6, 'Sofía', 'García Vergara', 'sofia@gmail.com'),
-(7, 'Ronaldinho', 'Todo Poderoso', 'ronal@gmail.com'),
-(8, 'Carmen', 'Valencia Daza', 'daza@gmail.com'),
-(9, 'Ana María', 'Valencia Daza', 'daza@gmail.com'),
-(10, 'Reinaldo', 'Garlo Valancha', 'garlo@gmail.com'),
-(11, 'Terro', 'Analdo Garza', 'analda@gmail.com');
+(1, 'Felipe', 'Gacía López', 'pipegarcial@hotmail.com'),
+(2, 'Maria Camila', 'Daza Lozano', 'makaka@hotmail.com'),
+(3, 'Men', 'Garla Mendez', 'mendez@gmail.com'),
+(4, 'Rubio', 'Benito York', 'york@gmail.com'),
+(5, 'Mancia', 'Garla Mendez', 'as@gmail.com'),
+(6, 'caballero', 'Benito York', 'yoadrk@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -62,6 +57,7 @@ CREATE TABLE IF NOT EXISTS `estudiante_materia` (
   `id_estudiante` int(11) NOT NULL,
   `id_materia` int(11) NOT NULL,
   PRIMARY KEY (`id`),
+  UNIQUE KEY `id_estudiante` (`id_estudiante`,`id_materia`),
   KEY `id_estudiante_idx` (`id_estudiante`),
   KEY `id_materia_idx` (`id_materia`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
@@ -71,10 +67,10 @@ CREATE TABLE IF NOT EXISTS `estudiante_materia` (
 --
 
 INSERT INTO `estudiante_materia` (`id`, `id_estudiante`, `id_materia`) VALUES
-(1, 3, 2),
-(2, 4, 1),
-(3, 3, 4),
-(4, 4, 3);
+(1, 1, 1),
+(2, 2, 2),
+(3, 3, 1),
+(4, 4, 1);
 
 -- --------------------------------------------------------
 
@@ -89,19 +85,15 @@ CREATE TABLE IF NOT EXISTS `materia` (
   `id_profesor` int(11) NOT NULL,
   PRIMARY KEY (`id_materia`),
   KEY `id_profesor_idx` (`id_profesor`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 --
 -- Volcado de datos para la tabla `materia`
 --
 
 INSERT INTO `materia` (`id_materia`, `codigo_materia`, `nombre_materia`, `id_profesor`) VALUES
-(1, 1234, 'Programación Web', 1),
-(2, 4321, 'Interacción Hombre Computador - I', 2),
-(3, 5642, 'Programación en Red', 3),
-(4, 5214, 'Diagramación y Tipografía', 4),
-(5, 5642, 'Diseño 4D', 3),
-(6, 5214, 'Proyecto de Grado - I', 4);
+(1, 5432, 'Programación web', 1),
+(2, 12345, 'Programación en redes', 2);
 
 -- --------------------------------------------------------
 
@@ -110,22 +102,49 @@ INSERT INTO `materia` (`id_materia`, `codigo_materia`, `nombre_materia`, `id_pro
 --
 
 CREATE TABLE IF NOT EXISTS `nota` (
-  `id_nota` int(11) NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(45) NOT NULL,
+  `id_notas` int(11) NOT NULL AUTO_INCREMENT,
+  `nombre_nota` varchar(45) NOT NULL,
   `porcentaje` float NOT NULL,
-  PRIMARY KEY (`id_nota`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+  `id_materia` int(11) NOT NULL,
+  PRIMARY KEY (`id_notas`),
+  KEY `id_materia_idx` (`id_materia`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+--
+-- Volcado de datos para la tabla `nota`
+--
+
+INSERT INTO `nota` (`id_notas`, `nombre_nota`, `porcentaje`, `id_materia`) VALUES
+(1, 'Quiz Uno', 0.2, 1),
+(2, 'Final', 0.8, 1);
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `nota_estudiante`
+-- Estructura de tabla para la tabla `notas_estudiante`
 --
 
-CREATE TABLE IF NOT EXISTS `nota_estudiante` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+CREATE TABLE IF NOT EXISTS `notas_estudiante` (
+  `id_nota_estudiante` int(11) NOT NULL AUTO_INCREMENT,
+  `id_estudiante` int(11) NOT NULL,
+  `id_materia` int(11) NOT NULL,
+  `id_notas` int(11) NOT NULL,
+  `float` float DEFAULT NULL,
+  PRIMARY KEY (`id_nota_estudiante`),
+  KEY `id_estudiante_idx` (`id_estudiante`),
+  KEY `id_materia_idx` (`id_materia`),
+  KEY `id_nota_idx` (`id_notas`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+
+--
+-- Volcado de datos para la tabla `notas_estudiante`
+--
+
+INSERT INTO `notas_estudiante` (`id_nota_estudiante`, `id_estudiante`, `id_materia`, `id_notas`, `float`) VALUES
+(1, 1, 1, 1, 5),
+(2, 1, 1, 2, 5),
+(3, 3, 1, 1, 2),
+(4, 3, 1, 2, 1);
 
 -- --------------------------------------------------------
 
@@ -139,17 +158,15 @@ CREATE TABLE IF NOT EXISTS `profesor` (
   `apellidos` varchar(45) NOT NULL,
   `correo` varchar(45) NOT NULL,
   PRIMARY KEY (`id_profesor`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 --
 -- Volcado de datos para la tabla `profesor`
 --
 
 INSERT INTO `profesor` (`id_profesor`, `nombre`, `apellidos`, `correo`) VALUES
-(1, 'Hector Jaime ', 'Mejía Pineda', 'hector@gmail.com'),
-(2, 'Juan Manuel', 'Salamanca Alborado', 'sala@gmail.com'),
-(3, 'Jose Andrés ', 'Moncada Cardona', 'moncada@gmail.com'),
-(4, 'Mauricio', 'García Cordoba', 'moncada@gmail.com');
+(1, 'Hector Jaime ', 'Mejía Pineda', 'hecotrla@hotmail.com'),
+(2, 'Jose Andrés ', 'Moncada Albarado', 'monk@hotmail.com');
 
 --
 -- Restricciones para tablas volcadas
@@ -167,6 +184,20 @@ ALTER TABLE `estudiante_materia`
 --
 ALTER TABLE `materia`
   ADD CONSTRAINT `id_profesor` FOREIGN KEY (`id_profesor`) REFERENCES `profesor` (`id_profesor`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `nota`
+--
+ALTER TABLE `nota`
+  ADD CONSTRAINT `id_materia_nota` FOREIGN KEY (`id_materia`) REFERENCES `materia` (`id_materia`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `notas_estudiante`
+--
+ALTER TABLE `notas_estudiante`
+  ADD CONSTRAINT `id_estudiante_notas` FOREIGN KEY (`id_estudiante`) REFERENCES `estudiantes` (`id_estudiante`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `id_materia_notas` FOREIGN KEY (`id_materia`) REFERENCES `materia` (`id_materia`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `id_notas_notas` FOREIGN KEY (`id_notas`) REFERENCES `nota` (`id_notas`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
