@@ -1,0 +1,1 @@
+alter table nombre tabla add UNIQUE  (`nombre_columna`,`nombre_columna`)

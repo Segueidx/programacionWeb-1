@@ -3,7 +3,8 @@
 	
 	//======== CONSULTAR ========= //
 	# code...
-	$query = "SELECT * FROM estudiantes ORDER BY id_estudiante DESC LIMIT 2";
+	//$query = "SELECT * FROM estudiantes ORDER BY id_estudiante DESC LIMIT 2";
+	$query = "SELECT * FROM estudiantes ORDER BY id_estudiante ASC";
 	$resultQuery = mysqli_query($con,$query);
 	while ($row = mysqli_fetch_array($resultQuery)) {
 	 	echo $row["id_estudiante"]." ".$row["nombre"]." ".$row["apellidos"]." ".$row["correo"];
